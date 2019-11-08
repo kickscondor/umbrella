@@ -9,6 +9,11 @@ u.prototype.html = function (text) {
   // Loop through all the nodes
   return this.each(function (node) {
     // Set the inner html to the node
-    node.innerHTML = text;
+    var parser = new DOMParser();
+    var parsed = parser.parseFromString(text, 'text/html');
+    var tags = parsed.getElementsByTagName('body');
+     
+    node.innerHTML = '';
+    tags.forEach(function (tag) { node.appendChild(tag) });
   });
 };
