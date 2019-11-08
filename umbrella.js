@@ -386,6 +386,8 @@ u.prototype.hasClass = function () {
 };
 
 
+var safeInnerHTML = require('safeinnerhtml')
+
 // Set or retrieve the html from the matched node(s)
 u.prototype.html = function (text) {
   // Needs to check undefined as it might be ""
@@ -397,12 +399,7 @@ u.prototype.html = function (text) {
   // Loop through all the nodes
   return this.each(function (node) {
     // Set the inner html to the node
-    var parser = new DOMParser();
-    var parsed = parser.parseFromString(text, 'text/html');
-    var tags = parsed.getElementsByTagName('body');
-     
-    node.innerHTML = '';
-    tags.forEach(function (tag) { node.appendChild(tag) });
+    safeInnerHTML(node, text);
   });
 };
 
